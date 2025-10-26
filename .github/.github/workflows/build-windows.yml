@@ -1,0 +1,34 @@
+name: Build Windows EXE
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v3
+
+      - name: Instalar Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Instalar dependencias
+        run: |
+          cd frontend
+          npm install
+          npm run build
+
+      - name: Crear ejecutable para Windows
+        run: |
+          npm install -g electron-builder
+          cd frontend
+          npx electron-builder --win --x64
+
+      - name: Subir ejecutable como artefacto
+        uses: actions/upload-artifact@v3
+        with:
+          name: GeneradorVideoAI
+          path: frontend/dist/*.exe
