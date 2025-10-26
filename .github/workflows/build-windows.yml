@@ -28,7 +28,7 @@ jobs:
           npx electron-builder --win --x64
 
       - name: Subir ejecutable como artefacto
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: GeneradorVideoAI
           path: frontend/dist/*.exe
